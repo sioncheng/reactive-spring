@@ -30,6 +30,6 @@ public class TemperatureSensor {
         double temperature = 16 + random.nextGaussian() * 10;
         publisher.publishEvent(new Temperature(temperature));
 
-        executor.schedule(this::probe, random.nextInt(5000), TimeUnit.MILLISECONDS);
+        executor.schedule(this::probe, random.nextInt(3000), TimeUnit.MILLISECONDS);
     }
 }
