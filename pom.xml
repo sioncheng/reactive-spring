@@ -18,6 +18,7 @@
     <modules>
         <module>SpringBootAwesome</module>
         <module>rx-java</module>
+        <module>project-reactor</module>
     </modules>
 
 </project>
