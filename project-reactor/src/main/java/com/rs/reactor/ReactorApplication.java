@@ -11,8 +11,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 @SpringBootApplication
 public class ReactorApplication implements ApplicationRunner {
@@ -27,9 +25,10 @@ public class ReactorApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         //oomFlux();
         //mono();
-        //customPublisher();
+        //customPublisher()
         //customConsumer();
-        processor();
+        //processor();
+        flatMap();
     }
 
 
@@ -121,6 +120,15 @@ public class ReactorApplication implements ApplicationRunner {
                 .materialize()
                 .doOnEach(System.out::println)
                 .dematerialize()
+                .subscribe(System.out::println);
+    }
+
+    private void flatMap() {
+        Flux.just("hello", "hi", "what", "how")
+                .collectMultimap(x -> x.substring(0, 1), v -> v)
+                .flux()
+                .flatMap(x -> Flux.fromIterable(x.values()))
+                .flatMap(x -> Flux.fromIterable(x))
                 .subscribe(System.out::println);
     }
 }
