@@ -28,7 +28,9 @@ public class ReactorApplication implements ApplicationRunner {
         //customPublisher()
         //customConsumer();
         //processor();
-        flatMap();
+        //flatMap();
+        //reduceAndScan();
+        combining();
     }
 
 
@@ -130,5 +132,21 @@ public class ReactorApplication implements ApplicationRunner {
                 .flatMap(x -> Flux.fromIterable(x.values()))
                 .flatMap(x -> Flux.fromIterable(x))
                 .subscribe(System.out::println);
+    }
+
+    private void reduceAndScan() {
+        Flux.range(1, 5)
+                .reduce(0, (a, b) -> a + b)
+                .subscribe(System.out::println);
+
+        Flux.range(1, 5)
+                .scan(0, (a, b) -> a + b)
+                .subscribe(System.out::println);
+    }
+
+    private void combining() {
+        Flux.concat(Flux.range(2, 4),
+                Flux.range(1,3)
+        ).subscribe(System.out::println);
     }
 }
